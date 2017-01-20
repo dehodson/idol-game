@@ -53,7 +53,7 @@ var Tiki = function(sweetness, spiciness, stinkiness, prettiness){
 	this.prettiness = prettiness;
 }
 
-Tiki.prototype.getDescription = function(){
+Tiki.prototype.getName = function(){
 	var kind = "";
 
 	if(this.sweetness > 3 && this.spiciness > 3 && this.stinkiness > 3 && this.prettiness > 3){
@@ -91,6 +91,61 @@ Tiki.prototype.getDescription = function(){
 	}
 
 	return kind;
+}
+
+Tiki.prototype.getDescription = function(){
+	var description = "";
+
+	if(this.sweetness <= .5 && this.spiciness <= .5 && this.stinkiness <= 3 && this.prettiness <= 3){
+		description = "Just a normal Tiki.";
+	}else{
+		if(this.sweetness > 5){
+			description += "<span class=\"sweet\">Extremely sweet.</span><br />";
+		}else if(this.sweetness > 3){
+			description += "<span class=\"sweet\">Very sweet.</span><br />";
+		}else if(this.sweetness > 2){
+			description += "<span class=\"sweet\">Somewhat sweet.</span><br />";
+		}else if(this.sweetness > 1){
+			description += "<span class=\"sweet\">Kind of sweet.</span><br />";
+		}else{
+			description += "<span class=\"sweet\">Tastes a tad bit sweet.</span><br />"
+		}
+		if(this.spiciness > 5){
+			description += "<span class=\"spicy\">Extremely spicy.</span><br />";
+		}else if(this.spiciness > 3){
+			description += "<span class=\"spicy\">Very spicy.</span><br />";
+		}else if(this.spiciness > 2){
+			description += "<span class=\"spicy\">Somewhat spicy.</span><br />";
+		}else if(this.spiciness > 1){
+			description += "<span class=\"spicy\">Kind of spicy.</span><br />";
+		}else{
+			description += "<span class=\"spicy\">Burns your tongue a little.</span><br />"
+		}
+		if(this.stinkiness > 5){
+			description += "<span class=\"stinky\">Extremely stinky.</span><br />";
+		}else if(this.stinkiness > 3){
+			description += "<span class=\"stinky\">Very stinky.</span><br />";
+		}else if(this.stinkiness > 2){
+			description += "<span class=\"stinky\">Somewhat stinky.</span><br />";
+		}else if(this.stinkiness > 1){
+			description += "<span class=\"stinky\">Kind of stinky.</span><br />";
+		}else{
+			description += "<span class=\"stinky\">Smells a little bit.</span><br />"
+		}
+		if(this.prettiness > 5){
+			description += "<span class=\"pretty\">Extremely pretty.</span>";
+		}else if(this.prettiness > 3){
+			description += "<span class=\"pretty\">Very pretty.</span>";
+		}else if(this.prettiness > 2){
+			description += "<span class=\"pretty\">Somewhat pretty.</span>";
+		}else if(this.prettiness > 1){
+			description += "<span class=\"pretty\">Kind of pretty.</span>";
+		}else{
+			description += "<span class=\"pretty\">Looks extra nice.</span>"
+		}
+	}
+
+	return description;
 }
 
 function breedTikis(parent1, parent2, mutationChance){
