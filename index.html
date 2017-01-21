@@ -39,7 +39,7 @@
 			top: 0vmin;
 			left: 0vmin;
 		}
-		.idol .tooltip{
+		.outside .tooltip{
 			visibility: hidden;
 			background-color:black;
 			color: #fff;
@@ -54,7 +54,7 @@
 			width: 15vmin;
 			margin-left: -8.5vmin;
 		}
-		.idol .tooltip::after {
+		.outside .tooltip::after {
 			content: "";
 			position: absolute;
 			top: 100%;
@@ -64,7 +64,7 @@
 			border-style: solid;
 			border-color: black transparent transparent transparent;
 		}
-		.idol:hover .tooltip{
+		.outside:hover .tooltip{
 			visibility: visible;
 		}
 		.sweet{
@@ -79,23 +79,49 @@
 		.spicy{
 			color: #F8C471;
 		}
-		#tiki-bin{
+		.bin{
 			position: absolute;
-			height:16vmin;
-			width:32vmin;
+			height:8vmin;
+			width:8vmin;
+			background-color: #AAA;
+		}
+		#tiki-bin-1{
 			top:50vmin;
 			left:24vmin;
-			background-color: #AAA;
+		}
+		#tiki-bin-2{
+			top:50vmin;
+			left:32vmin;
+		}
+		#tiki-bin-3{
+			top:50vmin;
+			left:40vmin;
+		}
+		#tiki-bin-4{
+			top:50vmin;
+			left:48vmin;
 		}
 		.table{
 			background-color: #AA3;
-			width: 16vmin;
+			width: 8vmin;
 			height: 8vmin;
 			position: absolute;
 		}
 		#table-1{
 			top: 20vmin;
 			left:32vmin;
+		}
+		#table-2{
+			top: 20vmin;
+			left:40vmin;
+		}
+		#sell{
+			left:8vmin;
+			bottom: 8vmin;
+			position: absolute;
+			background-color: red;
+			height: 8vmin;
+			width: 8vmin;
 		}
 	</style>
 	<link rel='shortcut icon' href='favicon.ico' type='image/x-icon'/ >
@@ -104,10 +130,14 @@
 	<div id="no-click"></div>
 		<div id="main">
 			<div id="game-title">Idol Game</div>
-			<div id="table-1" class="table" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-			<div id="tiki-bin" ondrop="drop(event)" ondragover="allowDrop(event)">
-				<div class="idol" id="tiki-1" draggable="true" ondragstart="drag(event)"><span class="tooltip" id="tiki-1-tooltip"></span></div>
-			</div>
+			<div id="table-1" class="table" ondrop="dropTable(event)" ondragover="allowDrop(event)"></div>
+			<div id="table-2" class="table" ondrop="dropTable(event)" ondragover="allowDrop(event)"></div>
+			<div id="tiki-bin-1" class="bin" ondrop="dropBin(event)" ondragover="allowDrop(event)"></div>
+			<div id="tiki-bin-2" class="bin" ondrop="dropBin(event)" ondragover="allowDrop(event)"></div>
+			<div id="tiki-bin-3" class="bin" ondrop="dropBin(event)" ondragover="allowDrop(event)"></div>
+			<div id="tiki-bin-4" class="bin" ondrop="dropBin(event)" ondragover="allowDrop(event)"></div>
+
+			<div id="sell" ondrop="sell(event)" ondragover="allowDrop(event)"></div>
 		</div>
 	</body>
 	<script src="idol.js"></script>

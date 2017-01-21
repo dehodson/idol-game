@@ -101,6 +101,13 @@ Tiki.prototype.getDescription = function(){
 	return description;
 }
 
+Tiki.prototype.makeHTML = function(id){
+	var string = "<div class=\"outside\" id=\""+id+"-outside\"><div class=\"idol\" id=\""+id+"\" draggable=\"true\" ondragstart=\"drag(event)\">";
+	string += "</div><span class=\"tooltip\" id=\""+id+"-tooltip\">"+this.getName()+" Tiki<br/>"+this.getDescription()+"</span></div>";
+
+	return string;
+}
+
 function breedTikis(parent1, parent2, mutationChance){
 	var sweetness = ((parent1.sweetness + parent2.sweetness) / 2) + (Math.random() * mutationChance);
 	var spiciness = ((parent1.spiciness + parent2.spiciness) / 2) + (Math.random() * mutationChance);
@@ -110,22 +117,80 @@ function breedTikis(parent1, parent2, mutationChance){
 	return new Tiki(sweetness, spiciness, stinkiness, prettiness);
 }
 
+var bins  = [null, null, null, null];
+var table = [null, null];
+var tikis = [];
+
 function allowDrop(ev) {
     ev.preventDefault();
 }
 
 function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
+    ev.dataTransfer.setData("text", ev.target.parentNode.id);
 }
 
-function drop(ev) {
+function dropBin(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
+    var tiki = document.getElementById(data);
+
+	if(bins[parseInt(ev.target.id.substring(9)) - 1] == null){
+		if(tiki.parentNode.className == "bin"){
+			bins[parseInt(tiki.parentNode.id.substring(9)) - 1] = null;
+		}else if(tiki.parentNode.className == "table"){
+			table[parseInt(tiki.parentNode.id.substring(6)) - 1] = null;
+		}
+		bins[parseInt(ev.target.id.substring(9)) - 1] = tikis[parseInt(tiki.id.substring(5))];
+		ev.target.appendChild(tiki);
+	}
+}
+
+function dropTable(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    var tiki = document.getElementById(data);
+
+	if(table[parseInt(ev.target.id.substring(6)) - 1] == null){
+		if(tiki.parentNode.className == "bin"){
+			bins[parseInt(tiki.parentNode.id.substring(9)) - 1] = null;
+		}else if(tiki.parentNode.className == "table"){
+			table[parseInt(tiki.parentNode.id.substring(6)) - 1] = null;
+		}
+		table[parseInt(ev.target.id.substring(6)) - 1] = tikis[parseInt(tiki.id.substring(5))];
+		ev.target.appendChild(tiki);
+	}
+}
+
+function sell(ev){
+	ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    var tiki = document.getElementById(data);
+
+    if(tiki.parentNode.className == "bin"){
+		bins[parseInt(tiki.parentNode.id.substring(9)) - 1] = null;
+	}else if(tiki.parentNode.className == "table"){
+		table[parseInt(tiki.parentNode.id.substring(6)) - 1] = null;
+	}
+
+	tiki.parentNode.removeChild(tiki);
+}
+
+function gameTick(){
+	if(table[0] != null && table[1] != null){
+		tikis.push(breedTikis(table[0], table[1], 1));
+		bins[3] = tikis[tikis.length - 1];
+		document.getElementById("tiki-bin-4").innerHTML = bins[3].makeHTML("tiki-"+(tikis.length - 1));
+	}
 }
 
 //testing
 
 var test = new Tiki(Math.random() * 5, Math.random() * 5, Math.random() * 5, Math.random() * 5);
-document.getElementById("tiki-1-tooltip").innerHTML = test.getName() + " Tiki<br />";
-document.getElementById("tiki-1-tooltip").innerHTML += test.getDescription();
+document.getElementById("tiki-bin-1").innerHTML = test.makeHTML("tiki-0");
+bins[0] = test;
+tikis.push(test);
+
+var test2 = new Tiki(Math.random() * 5, Math.random() * 5, Math.random() * 5, Math.random() * 5);
+document.getElementById("tiki-bin-2").innerHTML = test2.makeHTML("tiki-1");
+bins[1] = test;
+tikis.push(test2);
