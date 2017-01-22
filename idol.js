@@ -119,7 +119,8 @@ function breedTikis(parent1, parent2, mutationChance){
 
 var bins  = [null, null, null, null];
 var table = [null, null];
-var tikis = [];
+var tikis = {};
+var numTikis = 0;
 
 function allowDrop(ev) {
     ev.preventDefault();
@@ -127,11 +128,14 @@ function allowDrop(ev) {
 
 function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.parentNode.id);
+    ev.dataTransfer.setData("name", ev.target.id);
+    console.log(ev.target.parentNode.id);
 }
 
 function dropBin(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
+    var name = ev.dataTransfer.getData("name");
     var tiki = document.getElementById(data);
 
 	if(bins[parseInt(ev.target.id.substring(9)) - 1] == null){
@@ -140,7 +144,7 @@ function dropBin(ev) {
 		}else if(tiki.parentNode.className == "table"){
 			table[parseInt(tiki.parentNode.id.substring(6)) - 1] = null;
 		}
-		bins[parseInt(ev.target.id.substring(9)) - 1] = tikis[parseInt(tiki.id.substring(5))];
+		bins[parseInt(ev.target.id.substring(9)) - 1] = tikis[name];
 		ev.target.appendChild(tiki);
 	}
 }
@@ -148,6 +152,7 @@ function dropBin(ev) {
 function dropTable(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
+    var name = ev.dataTransfer.getData("name");
     var tiki = document.getElementById(data);
 
 	if(table[parseInt(ev.target.id.substring(6)) - 1] == null){
@@ -156,7 +161,7 @@ function dropTable(ev) {
 		}else if(tiki.parentNode.className == "table"){
 			table[parseInt(tiki.parentNode.id.substring(6)) - 1] = null;
 		}
-		table[parseInt(ev.target.id.substring(6)) - 1] = tikis[parseInt(tiki.id.substring(5))];
+		table[parseInt(ev.target.id.substring(6)) - 1] = tikis[name];
 		ev.target.appendChild(tiki);
 	}
 }
@@ -177,9 +182,10 @@ function sell(ev){
 
 function gameTick(){
 	if(table[0] != null && table[1] != null){
-		tikis.push(breedTikis(table[0], table[1], 1));
-		bins[3] = tikis[tikis.length - 1];
-		document.getElementById("tiki-bin-4").innerHTML = bins[3].makeHTML("tiki-"+(tikis.length - 1));
+		tikis["tiki-"+numTikis] = breedTikis(table[0], table[1], 1);
+		bins[3] = tikis["tiki-"+numTikis];
+		document.getElementById("tiki-bin-4").innerHTML = tikis["tiki-"+numTikis].makeHTML("tiki-"+numTikis);
+		numTikis += 1;
 	}
 }
 
@@ -188,9 +194,11 @@ function gameTick(){
 var test = new Tiki(Math.random() * 5, Math.random() * 5, Math.random() * 5, Math.random() * 5);
 document.getElementById("tiki-bin-1").innerHTML = test.makeHTML("tiki-0");
 bins[0] = test;
-tikis.push(test);
+tikis["tiki-0"] = test;
 
 var test2 = new Tiki(Math.random() * 5, Math.random() * 5, Math.random() * 5, Math.random() * 5);
 document.getElementById("tiki-bin-2").innerHTML = test2.makeHTML("tiki-1");
-bins[1] = test;
-tikis.push(test2);
+bins[1] = test2;
+tikis["tiki-1"] = test2;
+
+numTikis = 2;
