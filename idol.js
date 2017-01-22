@@ -129,7 +129,6 @@ function allowDrop(ev) {
 function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.parentNode.id);
     ev.dataTransfer.setData("name", ev.target.id);
-    console.log(ev.target.parentNode.id);
 }
 
 function dropBin(ev) {
@@ -138,7 +137,7 @@ function dropBin(ev) {
     var name = ev.dataTransfer.getData("name");
     var tiki = document.getElementById(data);
 
-	if(bins[parseInt(ev.target.id.substring(9)) - 1] == null){
+	if(ev.target.className != "idol" && bins[parseInt(ev.target.id.substring(9)) - 1] == null){
 		if(tiki.parentNode.className == "bin"){
 			bins[parseInt(tiki.parentNode.id.substring(9)) - 1] = null;
 		}else if(tiki.parentNode.className == "table"){
@@ -155,7 +154,7 @@ function dropTable(ev) {
     var name = ev.dataTransfer.getData("name");
     var tiki = document.getElementById(data);
 
-	if(table[parseInt(ev.target.id.substring(6)) - 1] == null){
+	if(ev.target.className != "idol" && table[parseInt(ev.target.id.substring(6)) - 1] == null){
 		if(tiki.parentNode.className == "bin"){
 			bins[parseInt(tiki.parentNode.id.substring(9)) - 1] = null;
 		}else if(tiki.parentNode.className == "table"){
@@ -169,6 +168,7 @@ function dropTable(ev) {
 function sell(ev){
 	ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
+    var name = ev.dataTransfer.getData("name");
     var tiki = document.getElementById(data);
 
     if(tiki.parentNode.className == "bin"){
@@ -176,6 +176,9 @@ function sell(ev){
 	}else if(tiki.parentNode.className == "table"){
 		table[parseInt(tiki.parentNode.id.substring(6)) - 1] = null;
 	}
+
+	console.log(tikis[name].sweetness + tikis[name].spiciness + tikis[name].prettiness + tikis[name].stinkiness);
+	delete tikis[name];
 
 	tiki.parentNode.removeChild(tiki);
 }
