@@ -60,7 +60,7 @@ Tiki.prototype.getDescription = function(){
 			description += "<span class=\"sweet\">Fairly sweet.</span><br />";
 		}else if(this.sweetness > 1){
 			description += "<span class=\"sweet\">Kind of sweet.</span><br />";
-		}else{
+		}else if(this.sweetness >= .5){
 			description += "<span class=\"sweet\">Tastes a little sweet.</span><br />"
 		}
 		if(this.spiciness > 5){
@@ -71,7 +71,7 @@ Tiki.prototype.getDescription = function(){
 			description += "<span class=\"spicy\">Fairly spicy.</span><br />";
 		}else if(this.spiciness > 1){
 			description += "<span class=\"spicy\">Kind of spicy.</span><br />";
-		}else{
+		}else if(this.spiciness >= .5){
 			description += "<span class=\"spicy\">Slightly hot to taste.</span><br />"
 		}
 		if(this.stinkiness > 5){
@@ -82,21 +82,23 @@ Tiki.prototype.getDescription = function(){
 			description += "<span class=\"stinky\">Fairly stinky.</span><br />";
 		}else if(this.stinkiness > 1){
 			description += "<span class=\"stinky\">Kind of stinky.</span><br />";
-		}else{
+		}else if(this.stinkiness >= .5){
 			description += "<span class=\"stinky\">Smells a little bit.</span><br />"
 		}
 		if(this.prettiness > 5){
-			description += "<span class=\"pretty\">Extremely pretty.</span>";
+			description += "<span class=\"pretty\">Extremely pretty.</span><br />";
 		}else if(this.prettiness > 3){
-			description += "<span class=\"pretty\">Very pretty.</span>";
+			description += "<span class=\"pretty\">Very pretty.</span><br />";
 		}else if(this.prettiness > 2){
-			description += "<span class=\"pretty\">Fairly pretty.</span>";
+			description += "<span class=\"pretty\">Fairly pretty.</span><br />";
 		}else if(this.prettiness > 1){
-			description += "<span class=\"pretty\">Kind of pretty.</span>";
-		}else{
-			description += "<span class=\"pretty\">Looks nice.</span>"
+			description += "<span class=\"pretty\">Kind of pretty.</span><br />";
+		}else if(this.prettiness >= .5){
+			description += "<span class=\"pretty\">Looks nice.</span><br />";
 		}
 	}
+
+	description += "Level "+Math.floor(this.sweetness + this.spiciness + this.prettiness + this.stinkiness);
 
 	return description;
 }
@@ -117,10 +119,16 @@ function breedTikis(parent1, parent2, mutationChance){
 	return new Tiki(sweetness, spiciness, stinkiness, prettiness);
 }
 
-var bins  = [null, null, null, null];
+var bins  = [null, null, null, null, null, null, null, null];
 var table = [null, null];
 var tikis = {};
 var numTikis = 0;
+var cash = 0;
+
+function addCash(number){
+	cash += number;
+	document.getElementById("cash").innerHTML = cash.toFixed(2);
+}
 
 function allowDrop(ev) {
     ev.preventDefault();
@@ -177,7 +185,7 @@ function sell(ev){
 		table[parseInt(tiki.parentNode.id.substring(6)) - 1] = null;
 	}
 
-	console.log(tikis[name].sweetness + tikis[name].spiciness + tikis[name].prettiness + tikis[name].stinkiness);
+	addCash(tikis[name].sweetness + tikis[name].spiciness + tikis[name].prettiness + tikis[name].stinkiness);
 	delete tikis[name];
 
 	tiki.parentNode.removeChild(tiki);
@@ -185,7 +193,7 @@ function sell(ev){
 
 function gameTick(){
 	if(table[0] != null && table[1] != null){
-		tikis["tiki-"+numTikis] = breedTikis(table[0], table[1], 1);
+		tikis["tiki-"+numTikis] = breedTikis(table[0], table[1], .27);
 		bins[3] = tikis["tiki-"+numTikis];
 		document.getElementById("tiki-bin-4").innerHTML = tikis["tiki-"+numTikis].makeHTML("tiki-"+numTikis);
 		numTikis += 1;
@@ -194,12 +202,12 @@ function gameTick(){
 
 //testing
 
-var test = new Tiki(Math.random() * 5, Math.random() * 5, Math.random() * 5, Math.random() * 5);
+var test = new Tiki(.25, .25, .25, .25);
 document.getElementById("tiki-bin-1").innerHTML = test.makeHTML("tiki-0");
 bins[0] = test;
 tikis["tiki-0"] = test;
 
-var test2 = new Tiki(Math.random() * 5, Math.random() * 5, Math.random() * 5, Math.random() * 5);
+var test2 = new Tiki(.25, .25, .25, .25);
 document.getElementById("tiki-bin-2").innerHTML = test2.makeHTML("tiki-1");
 bins[1] = test2;
 tikis["tiki-1"] = test2;

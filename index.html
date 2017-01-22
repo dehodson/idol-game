@@ -85,22 +85,6 @@
 			width:8vmin;
 			background-color: #AAA;
 		}
-		#tiki-bin-1{
-			top:50vmin;
-			left:24vmin;
-		}
-		#tiki-bin-2{
-			top:50vmin;
-			left:32vmin;
-		}
-		#tiki-bin-3{
-			top:50vmin;
-			left:40vmin;
-		}
-		#tiki-bin-4{
-			top:50vmin;
-			left:48vmin;
-		}
 		.table{
 			background-color: #AA3;
 			width: 8vmin;
@@ -123,6 +107,12 @@
 			height: 8vmin;
 			width: 8vmin;
 		}
+		#money-display{
+			left:2vmin;
+			top:2vmin;
+			position: absolute;
+			color:black;
+		}
 	</style>
 	<link rel='shortcut icon' href='favicon.ico' type='image/x-icon'/ >
 </head>
@@ -130,12 +120,19 @@
 	<div id="no-click"></div>
 		<div id="main">
 			<div id="game-title">Idol Game</div>
+
+			<div id="money-display">Cash: $<span id="cash">0</span></div>
+
 			<div id="table-1" class="table" ondrop="dropTable(event)" ondragover="allowDrop(event)"></div>
 			<div id="table-2" class="table" ondrop="dropTable(event)" ondragover="allowDrop(event)"></div>
-			<div id="tiki-bin-1" class="bin" ondrop="dropBin(event)" ondragover="allowDrop(event)"></div>
-			<div id="tiki-bin-2" class="bin" ondrop="dropBin(event)" ondragover="allowDrop(event)"></div>
-			<div id="tiki-bin-3" class="bin" ondrop="dropBin(event)" ondragover="allowDrop(event)"></div>
-			<div id="tiki-bin-4" class="bin" ondrop="dropBin(event)" ondragover="allowDrop(event)"></div>
+			<div id="tiki-bin-1" class="bin" ondrop="dropBin(event)" style="top:50vmin;left:24vmin;" ondragover="allowDrop(event)"></div>
+			<div id="tiki-bin-2" class="bin" ondrop="dropBin(event)" style="top:50vmin;left:32vmin;" ondragover="allowDrop(event)"></div>
+			<div id="tiki-bin-3" class="bin" ondrop="dropBin(event)" style="top:50vmin;left:40vmin;" ondragover="allowDrop(event)"></div>
+			<div id="tiki-bin-4" class="bin" ondrop="dropBin(event)" style="top:50vmin;left:48vmin;" ondragover="allowDrop(event)"></div>
+			<div id="tiki-bin-5" class="bin" ondrop="dropBin(event)" style="top:58vmin;left:24vmin;" ondragover="allowDrop(event)"></div>
+			<div id="tiki-bin-6" class="bin" ondrop="dropBin(event)" style="top:58vmin;left:32vmin;" ondragover="allowDrop(event)"></div>
+			<div id="tiki-bin-7" class="bin" ondrop="dropBin(event)" style="top:58vmin;left:40vmin;" ondragover="allowDrop(event)"></div>
+			<div id="tiki-bin-8" class="bin" ondrop="dropBin(event)" style="top:58vmin;left:48vmin;" ondragover="allowDrop(event)"></div>
 
 			<div id="sell" ondrop="sell(event)" ondragover="allowDrop(event)"></div>
 		</div>
