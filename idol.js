@@ -50,7 +50,7 @@ Tiki.prototype.getDescription = function(){
 	var description = "";
 
 	if(this.sweetness <= .5 && this.spiciness <= .5 && this.stinkiness <= 3 && this.prettiness <= 3){
-		description = "Just a normal Tiki.";
+		description = "Just a normal Tiki.<br />";
 	}else{
 		if(this.sweetness > 5){
 			description += "<span class=\"sweet\">Extremely sweet.</span><br />";
@@ -111,10 +111,10 @@ Tiki.prototype.makeHTML = function(id){
 }
 
 function breedTikis(parent1, parent2, mutationChance){
-	var sweetness = ((parent1.sweetness + parent2.sweetness) / 2) + (Math.random() * mutationChance);
-	var spiciness = ((parent1.spiciness + parent2.spiciness) / 2) + (Math.random() * mutationChance);
-	var stinkiness = ((parent1.stinkiness + parent2.stinkiness) / 2) + (Math.random() * mutationChance);
-	var prettiness = ((parent1.prettiness + parent2.prettiness) / 2) + (Math.random() * mutationChance);
+	var sweetness = ((parent1.sweetness + parent2.sweetness) / 2) + ((Math.random() - .5) * mutationChance);
+	var spiciness = ((parent1.spiciness + parent2.spiciness) / 2) + ((Math.random() - .5) * mutationChance);
+	var stinkiness = ((parent1.stinkiness + parent2.stinkiness) / 2) + ((Math.random() - .5) * mutationChance);
+	var prettiness = ((parent1.prettiness + parent2.prettiness) / 2) + ((Math.random() - .5) * mutationChance);
 
 	return new Tiki(sweetness, spiciness, stinkiness, prettiness);
 }
@@ -145,7 +145,7 @@ function dropBin(ev) {
     var name = ev.dataTransfer.getData("name");
     var tiki = document.getElementById(data);
 
-	if(ev.target.className != "idol" && bins[parseInt(ev.target.id.substring(9)) - 1] == null){
+	if(ev.target.className == "bin" && bins[parseInt(ev.target.id.substring(9)) - 1] == null){
 		if(tiki.parentNode.className == "bin"){
 			bins[parseInt(tiki.parentNode.id.substring(9)) - 1] = null;
 		}else if(tiki.parentNode.className == "table"){
@@ -162,7 +162,7 @@ function dropTable(ev) {
     var name = ev.dataTransfer.getData("name");
     var tiki = document.getElementById(data);
 
-	if(ev.target.className != "idol" && table[parseInt(ev.target.id.substring(6)) - 1] == null){
+	if(ev.target.className == "table" && table[parseInt(ev.target.id.substring(6)) - 1] == null){
 		if(tiki.parentNode.className == "bin"){
 			bins[parseInt(tiki.parentNode.id.substring(9)) - 1] = null;
 		}else if(tiki.parentNode.className == "table"){
@@ -170,6 +170,17 @@ function dropTable(ev) {
 		}
 		table[parseInt(ev.target.id.substring(6)) - 1] = tikis[name];
 		ev.target.appendChild(tiki);
+	}
+}
+
+function addToBin(tiki, id){
+	for(var spot in bins){
+		if(bins[spot] == null){
+			console.log(spot);
+			bins[spot] = tiki;
+			document.getElementById("tiki-bin-"+(parseInt(spot)+1)).innerHTML = tiki.makeHTML(id);
+			break;
+		} 
 	}
 }
 
@@ -193,9 +204,8 @@ function sell(ev){
 
 function gameTick(){
 	if(table[0] != null && table[1] != null){
-		tikis["tiki-"+numTikis] = breedTikis(table[0], table[1], .27);
-		bins[3] = tikis["tiki-"+numTikis];
-		document.getElementById("tiki-bin-4").innerHTML = tikis["tiki-"+numTikis].makeHTML("tiki-"+numTikis);
+		tikis["tiki-"+numTikis] = breedTikis(table[0], table[1], .6);
+		addToBin(tikis["tiki-"+numTikis], "tiki-"+numTikis);
 		numTikis += 1;
 	}
 }
