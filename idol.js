@@ -1,9 +1,10 @@
 
-var Tiki = function(sweetness, spiciness, stinkiness, prettiness){
+var Tiki = function(sweetness, spiciness, stinkiness, prettiness, id){
 	this.sweetness = sweetness;
 	this.spiciness = spiciness;
 	this.stinkiness = stinkiness;
 	this.prettiness = prettiness;
+	this.id = id;
 }
 
 Tiki.prototype.getName = function(){
@@ -103,9 +104,9 @@ Tiki.prototype.getDescription = function(){
 	return description;
 }
 
-Tiki.prototype.makeHTML = function(id){
-	var string = "<div class=\"outside\" id=\""+id+"-outside\"><div class=\"idol\" id=\""+id+"\" draggable=\"true\" ondragstart=\"drag(event)\">";
-	string += "</div><span class=\"tooltip\" id=\""+id+"-tooltip\">"+this.getName()+" Tiki<br/>"+this.getDescription()+"</span></div>";
+Tiki.prototype.makeHTML = function(){
+	var string = "<div class=\"outside\" id=\""+this.id+"-outside\"><div class=\"idol\" id=\""+this.id+"\" draggable=\"true\" ondragstart=\"drag(event)\">";
+	string += "</div><span class=\"tooltip\" id=\""+this.id+"-tooltip\">"+this.getName()+" Tiki<br/>"+this.getDescription()+"</span></div>";
 
 	return string;
 }
@@ -116,7 +117,10 @@ function breedTikis(parent1, parent2, mutationChance){
 	var stinkiness = ((parent1.stinkiness + parent2.stinkiness) / 2) + ((Math.random() - .5) * mutationChance);
 	var prettiness = ((parent1.prettiness + parent2.prettiness) / 2) + ((Math.random() - .5) * mutationChance);
 
-	return new Tiki(sweetness, spiciness, stinkiness, prettiness);
+	var id = "tiki-"+numTikis;
+	numTikis += 1;
+
+	return new Tiki(sweetness, spiciness, stinkiness, prettiness, id);
 }
 
 var bins  = [null, null, null, null, null, null, null, null];
@@ -173,12 +177,11 @@ function dropTable(ev) {
 	}
 }
 
-function addToBin(tiki, id){
+function addToBin(tiki){
 	for(var spot in bins){
 		if(bins[spot] == null){
-			console.log(spot);
 			bins[spot] = tiki;
-			document.getElementById("tiki-bin-"+(parseInt(spot)+1)).innerHTML = tiki.makeHTML(id);
+			document.getElementById("tiki-bin-"+(parseInt(spot)+1)).innerHTML = tiki.makeHTML();
 			break;
 		} 
 	}
@@ -202,24 +205,38 @@ function sell(ev){
 	tiki.parentNode.removeChild(tiki);
 }
 
+function sellAll(){
+	for(var i = 0; i < bins.length; i++){
+		if(bins[i] != null){
+			var element = document.getElementById(bins[i].id);
+			var tiki = tikis[bins[i].id];
+			addCash(tiki.sweetness + tiki.spiciness + tiki.prettiness + tiki.stinkiness);
+			delete tikis[bins[i].id];
+			bins[i] = null;
+			element.parentNode.removeChild(element);
+		}
+	}
+}
+
 function gameTick(){
 	if(table[0] != null && table[1] != null){
-		tikis["tiki-"+numTikis] = breedTikis(table[0], table[1], .6);
-		addToBin(tikis["tiki-"+numTikis], "tiki-"+numTikis);
-		numTikis += 1;
+		var tiki = breedTikis(table[0], table[1], .6);
+		tikis[tiki.id] = tiki;
+		addToBin(tikis[tiki.id]);
+		
 	}
 }
 
 //testing
 
-var test = new Tiki(.25, .25, .25, .25);
-document.getElementById("tiki-bin-1").innerHTML = test.makeHTML("tiki-0");
+var test = new Tiki(.25, .25, .25, .25, "tiki-0");
+document.getElementById("tiki-bin-1").innerHTML = test.makeHTML();
 bins[0] = test;
-tikis["tiki-0"] = test;
+tikis[test.id] = test;
 
-var test2 = new Tiki(.25, .25, .25, .25);
-document.getElementById("tiki-bin-2").innerHTML = test2.makeHTML("tiki-1");
+var test2 = new Tiki(.25, .25, .25, .25, "tiki-1");
+document.getElementById("tiki-bin-2").innerHTML = test2.makeHTML();
 bins[1] = test2;
-tikis["tiki-1"] = test2;
+tikis[test2.id] = test2;
 
 numTikis = 2;

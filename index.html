@@ -122,6 +122,15 @@
 			top:15vmin;
 			left:30vmin;
 		}
+		#sellall{
+			background-color: #FAA;
+			position: absolute;
+			width:20vmin;
+			text-align: center;
+			height:3vmin;
+			top:70vmin;
+			left:30vmin;
+		}
 	</style>
 	<link rel='shortcut icon' href='favicon.ico' type='image/x-icon'/ >
 </head>
@@ -144,6 +153,7 @@
 			<div id="tiki-bin-8" class="bin" ondrop="dropBin(event)" style="top:58vmin;left:48vmin;" ondragover="allowDrop(event)"></div>
 
 			<div id="breed" onclick="gameTick()">breed tikis</div>
+			<div id="sellall" onclick="sellAll()">sell all</div>
 
 			<div id="sell" ondrop="sell(event)" ondragover="allowDrop(event)"></div>
 		</div>
