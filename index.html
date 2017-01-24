@@ -245,6 +245,27 @@
 			text-decoration: underline;
 			cursor: pointer;
 		}
+		#tikis{
+			position: absolute;
+			width: 80vmin;
+			height: 80vmin;
+			top:0vmin;
+			left:0vmin;
+			background-color: #AFA;
+			border-radius: 3vmin;
+		}
+		.tiki-unlock{
+			width:20vmin;
+			height: 12vmin;
+			padding:4vmin 0vmin;
+			text-align: center;
+			float:left;
+		}
+		.unlock-img{
+			height:10vmin;
+			width: 10vmin;
+			margin: 0vmin 5vmin;
+		}
 	</style>
 	<link rel='shortcut icon' href='favicon.ico' type='image/x-icon'/ >
 </head>
@@ -301,6 +322,17 @@
 				</div>
 				<div id="shopkeep"></div>
 				<div id="quote">What can I help you with?</div>
+			</div>
+
+			<div id="tikis">
+				<div id="normal-tiki" class="tiki-unlock">
+					<img  class="unlock-img" src="tikis/normaltiki.png" /><br />
+					<span class="unlock-title">Normal Tiki</span>
+				</div>
+				<div id="stinky-tiki" class="tiki-unlock">
+					<img  class="unlock-img" src="tikis/stinkytiki.png" /><br />
+					<span class="unlock-title">Stinky Tiki</span>
+				</div>
 			</div>
 		</div>
 	</body>
