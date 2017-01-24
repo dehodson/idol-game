@@ -6,8 +6,9 @@
 		body, html{
 			height:100%;
 			margin:0;
-			color: #FFF;
+			color: black;
 			background-color: #333;
+			font-size:2vmin;
 			font-family: "Helvetica", "Arial", sans-serif;
 		}
 		#game-title{
@@ -17,6 +18,7 @@
 			width:80vmin;
 			text-align: center;
 			left: 0px;
+			color: #FFF;
 		}
 		#main{
 			height:80vmin;
@@ -162,6 +164,8 @@
 			top:0vmin;
 			left:0vmin;
 			background-color: #AFA;
+			visibility: hidden;
+			border-radius: 3vmin;
 		}
 		#shopkeep{
 			position: absolute;
@@ -195,6 +199,45 @@
 			border-style: solid;
 			border-color: transparent #FFF;
 		}
+		#close-shop{
+			padding:.25vmin;
+			font-size: 2vmin;
+			position: absolute;
+			top:1vmin;
+			left:1vmin;
+			height:2.5vmin;
+			width: 20vmin;
+			background-color:#FFF;
+			text-align: center;
+			border-radius: 1vmin;
+		}
+		#open-shop{
+			padding:.25vmin;
+			font-size: 2vmin;
+			position: absolute;
+			top:3vmin;
+			right:3vmin;
+			height:2.5vmin;
+			width: 20vmin;
+			background-color:#FFF;
+			text-align: center;
+			border-radius: 1vmin;
+		}
+		.upgrade{
+			width:32vmin;
+			padding:1vmin;
+			background-color: #FFF;
+			border-radius: 2vmin;
+			position: absolute;
+		}
+		.upgrade-title{
+			font-size:3vmin;
+			font-weight: bold;
+		}
+		.upgrade-button{
+			text-decoration: underline;
+			cursor: pointer;
+		}
 	</style>
 	<link rel='shortcut icon' href='favicon.ico' type='image/x-icon'/ >
 </head>
@@ -218,6 +261,8 @@
 				<div id="tiki-bin-7" class="bin" ondrop="dropBin(event)" style="top:58vmin;left:40vmin;" ondragover="allowDrop(event)"></div>
 				<div id="tiki-bin-8" class="bin" ondrop="dropBin(event)" style="top:58vmin;left:48vmin;" ondragover="allowDrop(event)"></div>
 
+				<div id="open-shop" onclick="openShop()">shop</div>
+
 				<div id="pickup" onclick="pickUp()">grab a tiki from the pile</div>
 				<div id="sellall" onclick="sellAll()">sell all</div>
 
@@ -225,6 +270,12 @@
 			</div>
 
 			<div id="upgrades">
+				<div id="close-shop" onclick="closeShop()">back to the beach</div>
+				<div id="upgrade-breeding" class="upgrade" style="top:6vmin;left:4vmin;">
+					<span class="upgrade-title">Incense</span><br />
+					<span class="upgrade-text">Reduces the time it takes to breed tikis.</span><br />
+					<span class="upgrade-button" id="upgrade-breeding-button" onclick="upgrade('incense')">Purchase - $<span id="upgrade-breeding-price">50</span></span>
+				</div>
 				<div id="shopkeep"></div>
 				<div id="quote">What can I help you with?</div>
 			</div>

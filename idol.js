@@ -127,12 +127,21 @@ var bins  = [null, null, null, null, null, null, null, null];
 var table = [null, null];
 var tikis = {};
 var numTikis = 0;
-var cash = 0;
-var breedingTime = 30;
+var cash = 100000;
+var breedingTime = 35;
 var breedingCounter = 0;
+
+var upgradeTable = {
+	"incense": 0
+}
 
 function addCash(number){
 	cash += number;
+	document.getElementById("cash").innerHTML = cash.toFixed(2);
+}
+
+function spendCash(number){
+	cash -= number;
 	document.getElementById("cash").innerHTML = cash.toFixed(2);
 }
 
@@ -243,9 +252,39 @@ function pickUp(){
 	}
 }
 
+function openShop(){
+	document.getElementById("upgrades").style.visibility = "visible";
+}
+
+function closeShop(){
+	document.getElementById("upgrades").style.visibility = "hidden";
+}
+
+function upgrade(name){
+	if(name == "incense"){
+		var price = (((upgradeTable.incense * upgradeTable.incense) * 100) + 50);
+		if(cash >= price){
+			spendCash(price);
+			upgradeTable.incense += 1;
+			breedingTime -= 10;
+
+			if(breedingTime < 0){
+				breedingTime = 1;
+				document.getElementById("upgrade-breeding-button").innerHTML = "Sold Out!";
+				document.getElementById("upgrade-breeding-button").className = "sold-out";
+			}else{
+				document.getElementById("upgrade-breeding-price").innerText = (((upgradeTable.incense * upgradeTable.incense) * 100) + 50);
+			}
+		}
+	}
+}
+
 function gameTick(){
 	if(table[0] != null && table[1] != null && binEmpty()){
 		breedingCounter += 1;
+		if(breedingCounter > breedingTime){
+			breedingCounter = breedingTime;
+		}
 		document.getElementById("breeding-bar-inner").style.width = ((breedingCounter / breedingTime) * 20) + "vmin";
 	} else {
 		breedingCounter = 0;
