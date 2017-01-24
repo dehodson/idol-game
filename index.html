@@ -131,6 +131,22 @@
 			top:70vmin;
 			left:30vmin;
 		}
+		#breeding-bar{
+			position: absolute;
+			height: 2vmin;
+			top:15vmin;
+			left: 30vmin;
+			width:20vmin;
+			background-color: #AAF;
+		}
+		#breeding-bar-inner{
+			position: absolute;
+			height: 2vmin;
+			top:0vmin;
+			left:0vmin;
+			width:0vmin;
+			background-color: #FAA;
+		}
 	</style>
 	<link rel='shortcut icon' href='favicon.ico' type='image/x-icon'/ >
 </head>
@@ -141,6 +157,7 @@
 
 			<div id="money-display">Cash: $<span id="cash">0</span></div>
 
+			<div id="breeding-bar"><div id="breeding-bar-inner"></div></div>
 			<div id="table-1" class="table" ondrop="dropTable(event)" ondragover="allowDrop(event)"></div>
 			<div id="table-2" class="table" ondrop="dropTable(event)" ondragover="allowDrop(event)"></div>
 			<div id="tiki-bin-1" class="bin" ondrop="dropBin(event)" style="top:50vmin;left:24vmin;" ondragover="allowDrop(event)"></div>
@@ -152,7 +169,7 @@
 			<div id="tiki-bin-7" class="bin" ondrop="dropBin(event)" style="top:58vmin;left:40vmin;" ondragover="allowDrop(event)"></div>
 			<div id="tiki-bin-8" class="bin" ondrop="dropBin(event)" style="top:58vmin;left:48vmin;" ondragover="allowDrop(event)"></div>
 
-			<div id="breed" onclick="gameTick()">breed tikis</div>
+			<!--div id="breed" onclick="gameTick()">breed tikis</div-->
 			<div id="sellall" onclick="sellAll()">sell all</div>
 
 			<div id="sell" ondrop="sell(event)" ondragover="allowDrop(event)"></div>

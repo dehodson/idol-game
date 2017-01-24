@@ -128,6 +128,8 @@ var table = [null, null];
 var tikis = {};
 var numTikis = 0;
 var cash = 0;
+var breedingTime = 30;
+var breedingCounter = 0;
 
 function addCash(number){
 	cash += number;
@@ -219,12 +221,18 @@ function sellAll(){
 }
 
 function gameTick(){
-	if(table[0] != null && table[1] != null){
-		var tiki = breedTikis(table[0], table[1], .6);
-		tikis[tiki.id] = tiki;
-		addToBin(tikis[tiki.id]);
-		
+	breedingCounter += 1;
+
+	if(breedingCounter >= breedingTime){
+		if(table[0] != null && table[1] != null){
+			var tiki = breedTikis(table[0], table[1], .6);
+			tikis[tiki.id] = tiki;
+			addToBin(tikis[tiki.id]);
+		}
+		breedingCounter = 0;
 	}
+
+	document.getElementById("breeding-bar-inner").style.width = ((breedingCounter / breedingTime) * 20) + "vmin";
 }
 
 //testing
@@ -240,3 +248,5 @@ bins[1] = test2;
 tikis[test2.id] = test2;
 
 numTikis = 2;
+
+window.setInterval(gameTick, 100)
