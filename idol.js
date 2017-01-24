@@ -111,11 +111,16 @@ Tiki.prototype.makeHTML = function(){
 	return string;
 }
 
-function breedTikis(parent1, parent2, mutationChance){
-	var sweetness = ((parent1.sweetness + parent2.sweetness) / 2) + ((Math.random() - .5) * mutationChance);
-	var spiciness = ((parent1.spiciness + parent2.spiciness) / 2) + ((Math.random() - .5) * mutationChance);
-	var stinkiness = ((parent1.stinkiness + parent2.stinkiness) / 2) + ((Math.random() - .5) * mutationChance);
-	var prettiness = ((parent1.prettiness + parent2.prettiness) / 2) + ((Math.random() - .5) * mutationChance);
+function breedTikis(parent1, parent2, mutationChance, negativeMutation){
+	var sweetness = ((parent1.sweetness + parent2.sweetness) / 2) + ((Math.random() - negativeMutation) * mutationChance);
+	var spiciness = ((parent1.spiciness + parent2.spiciness) / 2) + ((Math.random() - negativeMutation) * mutationChance);
+	var stinkiness = ((parent1.stinkiness + parent2.stinkiness) / 2) + ((Math.random() - negativeMutation) * mutationChance);
+	var prettiness = ((parent1.prettiness + parent2.prettiness) / 2) + ((Math.random() - negativeMutation) * mutationChance);
+
+	if(sweetness < 0){sweetness = 0;}
+	if(spiciness < 0){spiciness = 0;}
+	if(stinkiness < 0){stinkiness = 0;}
+	if(prettiness < 0){prettiness = 0;}
 
 	var id = "tiki-"+numTikis;
 	numTikis += 1;
@@ -129,20 +134,27 @@ var tikis = {};
 var numTikis = 0;
 var cash = 100000;
 var breedingTime = 35;
+var mutationChance = .6;
+var negativeMutation = .5;
 var breedingCounter = 0;
 
 var upgradeTable = {
-	"incense": 0
+	"incense": 0,
+	"uranium": 0,
+	"serum":   0,
+	"auto":    false
 }
 
 function addCash(number){
 	cash += number;
 	document.getElementById("cash").innerHTML = cash.toFixed(2);
+	document.getElementById("shop-cash").innerHTML = cash.toFixed(2);
 }
 
 function spendCash(number){
 	cash -= number;
 	document.getElementById("cash").innerHTML = cash.toFixed(2);
+	document.getElementById("shop-cash").innerHTML = cash.toFixed(2);
 }
 
 function allowDrop(ev) {
@@ -242,6 +254,27 @@ function binEmpty(){
 	return result;
 }
 
+function sellWorstTiki(){
+	var worst = Infinity;
+	var index = 0;
+
+	for(var item in bins){
+		if(bins[item] != null){
+			if(bins[item].sweetness + bins[item].spiciness + bins[item].prettiness + bins[item].stinkiness < worst){
+				worst = bins[item].sweetness + bins[item].spiciness + bins[item].prettiness + bins[item].stinkiness;
+				index = item;
+			}
+		}
+	}
+
+	var element = document.getElementById(bins[index].id);
+	var tiki = tikis[bins[index].id];
+	addCash(tiki.sweetness + tiki.spiciness + tiki.prettiness + tiki.stinkiness);
+	delete tikis[bins[index].id];
+	bins[index] = null;
+	element.parentNode.removeChild(element);
+}
+
 function pickUp(){
 	if(binEmpty()){
 		var id = "tiki-"+numTikis;
@@ -276,10 +309,47 @@ function upgrade(name){
 				document.getElementById("upgrade-breeding-price").innerText = (((upgradeTable.incense * upgradeTable.incense) * 100) + 50);
 			}
 		}
+	}else if(name == "uranium"){
+		var price = (((upgradeTable.uranium * upgradeTable.uranium) * 150) + 150);
+		if(cash >= price){
+			spendCash(price);
+			upgradeTable.uranium += 1;
+			mutationChance += .2;
+			document.getElementById("upgrade-uranium-price").innerText = (((upgradeTable.uranium * upgradeTable.uranium) * 150) + 150);
+		}
+	}else if(name == "serum"){
+		var price = (((upgradeTable.serum * upgradeTable.serum) * 100) + 200);
+		if(cash >= price){
+			spendCash(price);
+			upgradeTable.serum += 1;
+			negativeMutation -= .1;
+
+			if(negativeMutation <= 0.01){
+				negativeMutation = 0;
+				document.getElementById("upgrade-serum-button").innerHTML = "Sold Out!";
+				document.getElementById("upgrade-serum-button").className = "sold-out";
+			}else{
+				document.getElementById("upgrade-serum-price").innerText = (((upgradeTable.serum * upgradeTable.serum) * 100) + 200);
+			}
+		}
+	}else if(name == "auto"){
+		var price = 250;
+		if(cash >= price){
+			spendCash(price);
+			upgradeTable.auto = true;
+
+			document.getElementById("upgrade-auto-button").innerHTML = "Sold Out!";
+			document.getElementById("upgrade-auto-button").className = "sold-out";
+		}
 	}
 }
 
 function gameTick(){
+
+	if(!binEmpty() && upgradeTable.auto){
+		sellWorstTiki();
+	}
+
 	if(table[0] != null && table[1] != null && binEmpty()){
 		breedingCounter += 1;
 		if(breedingCounter > breedingTime){
@@ -293,7 +363,7 @@ function gameTick(){
 
 	if(breedingCounter >= breedingTime){
 		if(table[0] != null && table[1] != null){
-			var tiki = breedTikis(table[0], table[1], .6);
+			var tiki = breedTikis(table[0], table[1], mutationChance, negativeMutation);
 			tikis[tiki.id] = tiki;
 			addToBin(tikis[tiki.id]);
 		}
