@@ -99,7 +99,7 @@ Tiki.prototype.getDescription = function(){
 		}
 	}
 
-	description += "Level "+Math.floor(this.sweetness + this.spiciness + this.prettiness + this.stinkiness);
+	description += "Level "+Math.floor((this.sweetness + this.spiciness + this.prettiness + this.stinkiness) * 10);
 
 	return description;
 }
@@ -220,8 +220,37 @@ function sellAll(){
 	}
 }
 
+function binEmpty(){
+	var result = false;
+
+	for(var item in bins){
+		if(bins[item] == null){
+			result = true;
+			break;
+		}
+	}
+
+	return result;
+}
+
+function pickUp(){
+	if(binEmpty()){
+		var id = "tiki-"+numTikis;
+		numTikis += 1;
+		var tiki = new Tiki(.25, .25, .25, .25, id);
+		tikis[tiki.id] = tiki;
+		addToBin(tikis[tiki.id]);
+	}
+}
+
 function gameTick(){
-	breedingCounter += 1;
+	if(table[0] != null && table[1] != null && binEmpty()){
+		breedingCounter += 1;
+		document.getElementById("breeding-bar-inner").style.width = ((breedingCounter / breedingTime) * 20) + "vmin";
+	} else {
+		breedingCounter = 0;
+		document.getElementById("breeding-bar-inner").style.width = ((breedingCounter / breedingTime) * 20) + "vmin";
+	}
 
 	if(breedingCounter >= breedingTime){
 		if(table[0] != null && table[1] != null){
@@ -231,22 +260,6 @@ function gameTick(){
 		}
 		breedingCounter = 0;
 	}
-
-	document.getElementById("breeding-bar-inner").style.width = ((breedingCounter / breedingTime) * 20) + "vmin";
 }
-
-//testing
-
-var test = new Tiki(.25, .25, .25, .25, "tiki-0");
-document.getElementById("tiki-bin-1").innerHTML = test.makeHTML();
-bins[0] = test;
-tikis[test.id] = test;
-
-var test2 = new Tiki(.25, .25, .25, .25, "tiki-1");
-document.getElementById("tiki-bin-2").innerHTML = test2.makeHTML();
-bins[1] = test2;
-tikis[test2.id] = test2;
-
-numTikis = 2;
 
 window.setInterval(gameTick, 100)
