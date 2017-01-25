@@ -105,7 +105,8 @@ Tiki.prototype.getDescription = function(){
 }
 
 Tiki.prototype.makeHTML = function(){
-	var string = "<div class=\"outside\" id=\""+this.id+"-outside\"><div class=\"idol\" id=\""+this.id+"\" draggable=\"true\" ondragstart=\"drag(event)\">";
+	var kind = this.getName().toLowerCase() + "idol";
+	var string = "<div class=\"outside\" id=\""+this.id+"-outside\"><div class=\""+kind+" idol\" id=\""+this.id+"\" draggable=\"true\" ondragstart=\"drag(event)\">";
 	string += "</div><span class=\"tooltip\" id=\""+this.id+"-tooltip\">"+this.getName()+" Tiki<br/>"+this.getDescription()+"</span></div>";
 
 	return string;
