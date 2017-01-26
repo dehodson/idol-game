@@ -55,6 +55,18 @@
 		.sweetidol{
 			background-image:url("tikis/sweettiki.png");
 		}
+		.spicyidol{
+			background-image:url("tikis/spicytiki.png");
+		}
+		.durianidol{
+			background-image:url("tikis/duriantiki.png");
+		}
+		.pepperidol{
+			background-image:url("tikis/peppertiki.png");
+		}
+		.odiousidol{
+			background-image:url("tikis/odioustiki.png");
+		}
 		.outside .tooltip{
 			visibility: hidden;
 			background-color:black;
@@ -243,6 +255,30 @@
 			text-align: center;
 			border-radius: 1vmin;
 		}
+		#close-gallery{
+			padding:.25vmin;
+			font-size: 2vmin;
+			position: absolute;
+			top:.5vmin;
+			left:29.5vmin;
+			height:2.5vmin;
+			width: 20vmin;
+			background-color:#FFF;
+			text-align: center;
+			border-radius: 1vmin;
+		}
+		#open-gallery{
+			padding:.25vmin;
+			font-size: 2vmin;
+			position: absolute;
+			top:7vmin;
+			right:3vmin;
+			height:2.5vmin;
+			width: 20vmin;
+			background-color:#FFF;
+			text-align: center;
+			border-radius: 1vmin;
+		}
 		.upgrade{
 			width:32vmin;
 			height:11vmin;
@@ -305,6 +341,7 @@
 				<div id="tiki-bin-8" class="bin" ondrop="dropBin(event)" style="top:58vmin;left:48vmin;" ondragover="allowDrop(event)"></div>
 
 				<div id="open-shop" onclick="openShop()">shop</div>
+				<div id="open-gallery" onclick="openGallery()">gallery</div>
 
 				<div id="pickup" onclick="pickUp()">grab a tiki from the pile</div>
 				<div id="sellall" onclick="sellAll()">sell all</div>
@@ -340,6 +377,7 @@
 			</div>
 
 			<div id="tikis">
+				<div id="close-gallery" onclick="closeGallery()">back to the beach</div>
 				<div id="normal-tiki" class="tiki-unlock">
 					<img  class="unlock-img" src="tikis/normaltiki.png" /><br />
 					<span class="unlock-title">Normal Tiki</span>
