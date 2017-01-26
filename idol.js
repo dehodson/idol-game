@@ -129,7 +129,7 @@ function breedTikis(parent1, parent2, mutationChance, negativeMutation){
 	return new Tiki(sweetness, spiciness, stinkiness, prettiness, id);
 }
 
-var bins  = [null, null, null, null, null, null, null, null];
+var bins  = [null, null, null, null, null, null];
 var table = [null, null];
 var tikis = {};
 var numTikis = 0;
@@ -143,7 +143,8 @@ var upgradeTable = {
 	"incense": 0,
 	"uranium": 0,
 	"serum":   0,
-	"auto":    false
+	"auto":    false,
+	"bins":    0
 }
 
 function addCash(number){
@@ -349,6 +350,21 @@ function upgrade(name){
 
 			document.getElementById("upgrade-auto-button").innerHTML = "Sold Out!";
 			document.getElementById("upgrade-auto-button").className = "sold-out";
+		}
+	}else if(name == "bins"){
+		var price = (((upgradeTable.bins * upgradeTable.bins) * 10) + 25);
+		if(cash >= price){
+			spendCash(price);
+			upgradeTable.bins += 1;
+			document.getElementById("tiki-bin-"+(6 + upgradeTable.bins)).className = "bin";
+			bins.push(null);
+
+			if(upgradeTable.bins == 12){
+				document.getElementById("upgrade-bins-button").innerHTML = "Sold Out!";
+				document.getElementById("upgrade-bins-button").className = "sold-out";
+			}else{
+				document.getElementById("upgrade-bins-price").innerText = (((upgradeTable.bins * upgradeTable.bins) * 10) + 25);
+			}
 		}
 	}
 }

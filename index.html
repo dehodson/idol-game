@@ -79,8 +79,8 @@
 			bottom: 110%;
 			left: 50%;
 			font-size:2vmin;
-			width: 15vmin;
-			margin-left: -8.5vmin;
+			width: 20vmin;
+			margin-left: -10.5vmin;
 		}
 		.outside .tooltip::after {
 			content: "";
@@ -113,6 +113,9 @@
 			width:8vmin;
 			background-color: #AAA;
 		}
+		.bin.locked{
+			visibility: hidden;
+		}
 		.table{
 			background-color: #AA3;
 			width: 8vmin;
@@ -128,8 +131,8 @@
 			left:40vmin;
 		}
 		#sell{
-			left:8vmin;
-			bottom: 8vmin;
+			left:4vmin;
+			bottom: 24vmin;
 			position: absolute;
 			background-color: red;
 			height: 8vmin;
@@ -331,14 +334,24 @@
 				<div id="breeding-bar"><div id="breeding-bar-inner"></div></div>
 				<div id="table-1" class="table" ondrop="dropTable(event)" ondragover="allowDrop(event)"></div>
 				<div id="table-2" class="table" ondrop="dropTable(event)" ondragover="allowDrop(event)"></div>
-				<div id="tiki-bin-1" class="bin" ondrop="dropBin(event)" style="top:50vmin;left:24vmin;" ondragover="allowDrop(event)"></div>
-				<div id="tiki-bin-2" class="bin" ondrop="dropBin(event)" style="top:50vmin;left:32vmin;" ondragover="allowDrop(event)"></div>
-				<div id="tiki-bin-3" class="bin" ondrop="dropBin(event)" style="top:50vmin;left:40vmin;" ondragover="allowDrop(event)"></div>
-				<div id="tiki-bin-4" class="bin" ondrop="dropBin(event)" style="top:50vmin;left:48vmin;" ondragover="allowDrop(event)"></div>
-				<div id="tiki-bin-5" class="bin" ondrop="dropBin(event)" style="top:58vmin;left:24vmin;" ondragover="allowDrop(event)"></div>
-				<div id="tiki-bin-6" class="bin" ondrop="dropBin(event)" style="top:58vmin;left:32vmin;" ondragover="allowDrop(event)"></div>
-				<div id="tiki-bin-7" class="bin" ondrop="dropBin(event)" style="top:58vmin;left:40vmin;" ondragover="allowDrop(event)"></div>
-				<div id="tiki-bin-8" class="bin" ondrop="dropBin(event)" style="top:58vmin;left:48vmin;" ondragover="allowDrop(event)"></div>
+				<div id="tiki-bin-1"  class="bin" ondrop="dropBin(event)" style="top:40vmin;left:16vmin;" ondragover="allowDrop(event)"></div>
+				<div id="tiki-bin-2"  class="bin" ondrop="dropBin(event)" style="top:40vmin;left:24vmin;" ondragover="allowDrop(event)"></div>
+				<div id="tiki-bin-3"  class="bin" ondrop="dropBin(event)" style="top:40vmin;left:32vmin;" ondragover="allowDrop(event)"></div>
+				<div id="tiki-bin-4"  class="bin" ondrop="dropBin(event)" style="top:40vmin;left:40vmin;" ondragover="allowDrop(event)"></div>
+				<div id="tiki-bin-5"  class="bin" ondrop="dropBin(event)" style="top:40vmin;left:48vmin;" ondragover="allowDrop(event)"></div>
+				<div id="tiki-bin-6"  class="bin" ondrop="dropBin(event)" style="top:40vmin;left:56vmin;" ondragover="allowDrop(event)"></div>
+				<div id="tiki-bin-7"  class="bin locked" ondrop="dropBin(event)" style="top:48vmin;left:16vmin;" ondragover="allowDrop(event)"></div>
+				<div id="tiki-bin-8"  class="bin locked" ondrop="dropBin(event)" style="top:48vmin;left:24vmin;" ondragover="allowDrop(event)"></div>
+				<div id="tiki-bin-9"  class="bin locked" ondrop="dropBin(event)" style="top:48vmin;left:32vmin;" ondragover="allowDrop(event)"></div>
+				<div id="tiki-bin-10" class="bin locked" ondrop="dropBin(event)" style="top:48vmin;left:40vmin;" ondragover="allowDrop(event)"></div>
+				<div id="tiki-bin-11" class="bin locked" ondrop="dropBin(event)" style="top:48vmin;left:48vmin;" ondragover="allowDrop(event)"></div>
+				<div id="tiki-bin-12" class="bin locked" ondrop="dropBin(event)" style="top:48vmin;left:56vmin;" ondragover="allowDrop(event)"></div>
+				<div id="tiki-bin-13" class="bin locked" ondrop="dropBin(event)" style="top:56vmin;left:16vmin;" ondragover="allowDrop(event)"></div>
+				<div id="tiki-bin-14" class="bin locked" ondrop="dropBin(event)" style="top:56vmin;left:24vmin;" ondragover="allowDrop(event)"></div>
+				<div id="tiki-bin-15" class="bin locked" ondrop="dropBin(event)" style="top:56vmin;left:32vmin;" ondragover="allowDrop(event)"></div>
+				<div id="tiki-bin-16" class="bin locked" ondrop="dropBin(event)" style="top:56vmin;left:40vmin;" ondragover="allowDrop(event)"></div>
+				<div id="tiki-bin-17" class="bin locked" ondrop="dropBin(event)" style="top:56vmin;left:48vmin;" ondragover="allowDrop(event)"></div>
+				<div id="tiki-bin-18" class="bin locked" ondrop="dropBin(event)" style="top:56vmin;left:56vmin;" ondragover="allowDrop(event)"></div>
 
 				<div id="open-shop" onclick="openShop()">shop</div>
 				<div id="open-gallery" onclick="openGallery()">gallery</div>
@@ -356,6 +369,11 @@
 					<span class="upgrade-title">Incense</span><br />
 					<span class="upgrade-text">Reduces the time it takes to breed tikis.</span><br />
 					<span class="upgrade-button" id="upgrade-breeding-button" onclick="upgrade('incense')">Purchase - $<span id="upgrade-breeding-price">50</span></span>
+				</div>
+				<div id="upgrade-breeding" class="upgrade" style="top:22vmin;left:4vmin;">
+					<span class="upgrade-title">More Bins</span><br />
+					<span class="upgrade-text">More bins you can use to hold more tikis.</span><br />
+					<span class="upgrade-button" id="upgrade-bins-button" onclick="upgrade('bins')">Purchase - $<span id="upgrade-bins-price">25</span></span>
 				</div>
 				<div id="upgrade-uranium" class="upgrade" style="top:7vmin;right:4vmin;">
 					<span class="upgrade-title">Uranium</span><br />
