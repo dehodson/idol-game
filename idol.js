@@ -147,6 +147,8 @@ var upgradeTable = {
 	"bins":    0
 }
 
+var unlockedTikis = ["normal"];
+
 function addCash(number){
 	cash += number;
 	document.getElementById("cash").innerHTML = cash.toFixed(2);
@@ -389,6 +391,13 @@ function gameTick(){
 	if(breedingCounter >= breedingTime){
 		if(table[0] != null && table[1] != null){
 			var tiki = breedTikis(table[0], table[1], mutationChance, negativeMutation);
+			var type = tiki.getName().toLowerCase();
+
+			if(unlockedTikis.indexOf(type) == -1){
+				unlockedTikis.push(type);
+				document.getElementById(type+"-tiki").className = "tiki-unlock";
+			}
+
 			tikis[tiki.id] = tiki;
 			addToBin(tikis[tiki.id]);
 		}

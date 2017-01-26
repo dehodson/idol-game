@@ -10,6 +10,12 @@
 			background-color: #333;
 			font-size:2vmin;
 			font-family: "Helvetica", "Arial", sans-serif;
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
 		}
 		#game-title{
 			position: absolute;
@@ -320,6 +326,22 @@
 			width: 10vmin;
 			margin: 0vmin 5vmin;
 		}
+		.tiki-unlock.locked .unlock-img{
+			object-position: -1000vmin -1000vmin;
+			background-image: url("tikis/unknowntiki.png");
+			background-position: center;
+			background-size: 100%;
+			background-repeat: no-repeat;
+			height:10vmin;
+			width: 10vmin;
+			margin: 0vmin 5vmin;
+		}
+		.tiki-unlock.locked .unlock-title{
+			display: none;
+		}
+		.tiki-unlock.locked .container:after{
+			content: "???";
+		}
 	</style>
 	<link rel='shortcut icon' href='favicon.ico' type='image/x-icon'/ >
 </head>
@@ -398,67 +420,67 @@
 				<div id="close-gallery" onclick="closeGallery()">back to the beach</div>
 				<div id="normal-tiki" class="tiki-unlock">
 					<img  class="unlock-img" src="tikis/normaltiki.png" /><br />
-					<span class="unlock-title">Normal Tiki</span>
+					<div class="container"><span class="unlock-title">Normal Tiki</span></div>
 				</div>
-				<div id="stinky-tiki" class="tiki-unlock">
+				<div id="stinky-tiki" class="tiki-unlock locked">
 					<img  class="unlock-img" src="tikis/stinkytiki.png" /><br />
-					<span class="unlock-title">Stinky Tiki</span>
+					<div class="container"><span class="unlock-title">Stinky Tiki</span></div>
 				</div>
-				<div id="pretty-tiki" class="tiki-unlock">
+				<div id="pretty-tiki" class="tiki-unlock locked">
 					<img  class="unlock-img" src="tikis/prettytiki.png" /><br />
-					<span class="unlock-title">Pretty Tiki</span>
+					<div class="container"><span class="unlock-title">Pretty Tiki</span></div>
 				</div>
-				<div id="sweet-tiki" class="tiki-unlock">
+				<div id="sweet-tiki" class="tiki-unlock locked">
 					<img  class="unlock-img" src="tikis/sweettiki.png" /><br />
-					<span class="unlock-title">Sweet Tiki</span>
+					<div class="container"><span class="unlock-title">Sweet Tiki</span></div>
 				</div>
-				<div id="spicy-tiki" class="tiki-unlock">
+				<div id="spicy-tiki" class="tiki-unlock locked">
 					<img  class="unlock-img" src="tikis/spicytiki.png" /><br />
-					<span class="unlock-title">Spicy Tiki</span>
+					<div class="container"><span class="unlock-title">Spicy Tiki</span></div>
 				</div>
-				<div id="durian-tiki" class="tiki-unlock">
+				<div id="durian-tiki" class="tiki-unlock locked">
 					<img  class="unlock-img" src="tikis/duriantiki.png" /><br />
-					<span class="unlock-title">Durian Tiki</span>
+					<div class="container"><span class="unlock-title">Durian Tiki</span></div>
 				</div>
-				<div id="pepper-tiki" class="tiki-unlock">
+				<div id="pepper-tiki" class="tiki-unlock locked">
 					<img  class="unlock-img" src="tikis/peppertiki.png" /><br />
-					<span class="unlock-title">Pepper Tiki</span>
+					<div class="container"><span class="unlock-title">Pepper Tiki</span></div>
 				</div>
-				<div id="odious-tiki" class="tiki-unlock">
+				<div id="odious-tiki" class="tiki-unlock locked">
 					<img  class="unlock-img" src="tikis/odioustiki.png" /><br />
-					<span class="unlock-title">Odious Tiki</span>
+					<div class="container"><span class="unlock-title">Odious Tiki</span></div>
 				</div>
-				<div id="candy-tiki" class="tiki-unlock">
+				<div id="candy-tiki" class="tiki-unlock locked">
 					<img  class="unlock-img" src="tikis/candytiki.png" /><br />
-					<span class="unlock-title">Candy Tiki</span>
+					<div class="container"><span class="unlock-title">Candy Tiki</span></div>
 				</div>
-				<div id="fragrant-tiki" class="tiki-unlock">
+				<div id="fragrant-tiki" class="tiki-unlock locked">
 					<img  class="unlock-img" src="tikis/fragranttiki.png" /><br />
-					<span class="unlock-title">Fragrant Tiki</span>
+					<div class="container"><span class="unlock-title">Fragrant Tiki</span></div>
 				</div>
-				<div id="tamarind-tiki" class="tiki-unlock">
+				<div id="tamarind-tiki" class="tiki-unlock locked">
 					<img  class="unlock-img" src="tikis/tamarindtiki.png" /><br />
-					<span class="unlock-title">Tamarind Tiki</span>
+					<div class="container"><span class="unlock-title">Tamarind Tiki</span></div>
 				</div>
-				<div id="flambe-tiki" class="tiki-unlock">
+				<div id="flambe-tiki" class="tiki-unlock locked">
 					<img  class="unlock-img" src="tikis/flambetiki.png" /><br />
-					<span class="unlock-title">Flamb&eacute; Tiki</span>
+					<div class="container"><span class="unlock-title">Flamb&eacute; Tiki</span></div>
 				</div>
-				<div id="adorable-tiki" class="tiki-unlock">
+				<div id="adorable-tiki" class="tiki-unlock locked">
 					<img  class="unlock-img" src="tikis/adorabletiki.png" /><br />
-					<span class="unlock-title">Adorable Tiki</span>
+					<div class="container"><span class="unlock-title">Adorable Tiki</span></div>
 				</div>
-				<div id="perfumed-tiki" class="tiki-unlock">
+				<div id="perfumed-tiki" class="tiki-unlock locked">
 					<img  class="unlock-img" src="tikis/perfumedtiki.png" /><br />
-					<span class="unlock-title">Perfumed Tiki</span>
+					<div class="container"><span class="unlock-title">Perfumed Tiki</span></div>
 				</div>
-				<div id="nauseating-tiki" class="tiki-unlock">
+				<div id="nauseating-tiki" class="tiki-unlock locked">
 					<img  class="unlock-img" src="tikis/nauseatingtiki.png" /><br />
-					<span class="unlock-title">Nauseating Tiki</span>
+					<div class="container"><span class="unlock-title">Nauseating Tiki</span></div>
 				</div>
-				<div id="ultimate-tiki" class="tiki-unlock">
+				<div id="ultimate-tiki" class="tiki-unlock locked">
 					<img  class="unlock-img" src="tikis/ultimatetiki.png" /><br />
-					<span class="unlock-title">Ultimate Tiki</span>
+					<div class="container"><span class="unlock-title">Ultimate Tiki</span></div>
 				</div>
 			</div>
 		</div>
