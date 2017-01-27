@@ -406,3 +406,6 @@ function gameTick(){
 }
 
 window.setInterval(gameTick, 100)
+
+var d = document.getElementsByClassName("locked");
+for(var c in d){d[0].className = "tiki-unlock";}
