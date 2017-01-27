@@ -357,6 +357,27 @@
 		.tiki-unlock.locked .container:after{
 			content: "???";
 		}
+		#close-welcome{
+			padding:.25vmin;
+			font-size: 2vmin;
+			position: absolute;
+			top:.5vmin;
+			left:29.5vmin;
+			height:2.5vmin;
+			width: 20vmin;
+			background-color:#FFF;
+			text-align: center;
+			border-radius: 1vmin;
+		}
+		#welcome{
+			position: absolute;
+			width: 80vmin;
+			height: 80vmin;
+			top:0vmin;
+			left:0vmin;
+			background-color: #AFA;
+			border-radius: 3vmin;
+		}
 	</style>
 	<link rel='shortcut icon' href='favicon.ico' type='image/x-icon'/ >
 </head>
@@ -397,6 +418,12 @@
 				<div id="sellall" onclick="sellAll()">sell all</div>
 
 				<div id="sell" ondrop="sell(event)" ondragover="allowDrop(event)"></div>
+			</div>
+
+			<div id="welcome">
+				<div id="close-welcome" onclick="closeWelcome()">continue</div>
+				<div id="shopkeep"></div>
+				<div id="quote">Hi, welcome to the island!</div>
 			</div>
 
 			<div id="upgrades">

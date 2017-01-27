@@ -305,6 +305,10 @@ function closeGallery(){
 	document.getElementById("tikis").style.visibility = "hidden";
 }
 
+function closeWelcome(){
+	document.getElementById("welcome").style.visibility = "hidden";
+}
+
 function upgrade(name){
 	if(name == "incense"){
 		var price = (((upgradeTable.incense * upgradeTable.incense) * 100) + 50);
