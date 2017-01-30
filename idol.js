@@ -112,6 +112,10 @@ Tiki.prototype.makeHTML = function(){
 	return string;
 }
 
+function dictToTiki(dict){
+	return new Tiki(dict.sweetness, dict.spiciness, dict.stinkiness, dict.prettiness, dict.id);
+}
+
 function breedTikis(parent1, parent2, mutationChance, negativeMutation){
 	var sweetness = ((parent1.sweetness + parent2.sweetness) / 2) + ((Math.random() - negativeMutation) * mutationChance);
 	var spiciness = ((parent1.spiciness + parent2.spiciness) / 2) + ((Math.random() - negativeMutation) * mutationChance);
@@ -148,6 +152,98 @@ var upgradeTable = {
 }
 
 var unlockedTikis = ["normal"];
+
+var tikiSave    = {};
+var saveCounter = 0;
+
+function saveGame(){
+	tikiSave.bins             = bins;
+	tikiSave.table            = table;
+	tikiSave.tikis            = tikis;
+	tikiSave.numTikis         = numTikis;
+	tikiSave.cash             = cash;
+	tikiSave.breedingTime     = breedingTime;
+	tikiSave.mutationChance   = mutationChance;
+	tikiSave.negativeMutation = negativeMutation;
+	tikiSave.upgradeTable     = upgradeTable;
+	tikiSave.unlockedTikis    = unlockedTikis;
+
+	localStorage.tikiSave = JSON.stringify(tikiSave);
+}
+
+if(localStorage.tikiSave){
+	tikiSave = JSON.parse(localStorage.tikiSave);
+
+	bins             = tikiSave.bins;
+	table            = tikiSave.table;
+	tikis            = tikiSave.tikis;
+	numTikis         = tikiSave.numTikis;
+	cash             = tikiSave.cash;
+	breedingTime     = tikiSave.breedingTime;
+	mutationChance   = tikiSave.mutationChance;
+	negativeMutation = tikiSave.negativeMutation;
+	upgradeTable     = tikiSave.upgradeTable;
+	unlockedTikis    = tikiSave.unlockedTikis;
+
+	for(var t in unlockedTikis){
+		document.getElementById(unlockedTikis[t]+"-tiki").className = "tiki-unlock";
+	}
+
+	for(var t in bins){
+
+		var i = parseInt(t);
+
+		if(bins[i] != null){
+			bins[i] = dictToTiki(bins[i]);
+			document.getElementById("tiki-bin-"+(i + 1)).innerHTML = bins[i].makeHTML();
+		}
+	}
+
+	for(var t in table){
+
+		var i = parseInt(t);
+
+		if(table[i] != null){
+			table[i] = dictToTiki(table[i]);
+			document.getElementById("table-"+(i + 1)).innerHTML = table[i].makeHTML();
+		}
+	}
+
+
+	if(breedingTime <= 1){
+		breedingTime = 1;
+		document.getElementById("upgrade-breeding-button").innerHTML = "Sold Out!";
+		document.getElementById("upgrade-breeding-button").className = "sold-out";
+	}else{
+		document.getElementById("upgrade-breeding-price").innerText = (((upgradeTable.incense * upgradeTable.incense) * 100) + 50);
+	}
+
+	document.getElementById("upgrade-uranium-price").innerText = (((upgradeTable.uranium * upgradeTable.uranium) * 150) + 150);
+
+	if(negativeMutation <= 0.01){
+		negativeMutation = 0;
+		document.getElementById("upgrade-serum-button").innerHTML = "Sold Out!";
+		document.getElementById("upgrade-serum-button").className = "sold-out";
+	}else{
+		document.getElementById("upgrade-serum-price").innerText = (((upgradeTable.serum * upgradeTable.serum) * 100) + 200);
+	}
+
+	if(upgradeTable.auto){
+		document.getElementById("upgrade-auto-button").innerHTML = "Sold Out!";
+		document.getElementById("upgrade-auto-button").className = "sold-out";
+	}
+
+	for(var i = 0; i <= upgradeTable.bins; i++){
+		document.getElementById("tiki-bin-"+(6 + i)).className = "bin";
+	}
+
+	if(upgradeTable.bins == 12){
+		document.getElementById("upgrade-bins-button").innerHTML = "Sold Out!";
+		document.getElementById("upgrade-bins-button").className = "sold-out";
+	}else{
+		document.getElementById("upgrade-bins-price").innerText = (((upgradeTable.bins * upgradeTable.bins) * 10) + 25);
+	}
+}
 
 function addCash(number){
 	cash += number;
@@ -407,9 +503,13 @@ function gameTick(){
 		}
 		breedingCounter = 0;
 	}
+
+	saveCounter += 1;
+
+	if(saveCounter > 100){
+		saveGame();
+		saveCounter = 0;
+	}
 }
 
 window.setInterval(gameTick, 100)
-
-var d = document.getElementsByClassName("locked");
-for(var c in d){d[0].className = "tiki-unlock";}
