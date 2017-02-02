@@ -209,7 +209,6 @@ if(localStorage.tikiSave){
 		}
 	}
 
-
 	if(breedingTime <= 1){
 		breedingTime = 1;
 		document.getElementById("upgrade-breeding-button").innerHTML = "Sold Out!";
@@ -243,6 +242,9 @@ if(localStorage.tikiSave){
 	}else{
 		document.getElementById("upgrade-bins-price").innerText = (((upgradeTable.bins * upgradeTable.bins) * 10) + 25);
 	}
+
+	addCash(0);
+
 }
 
 function addCash(number){

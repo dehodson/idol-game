@@ -7,7 +7,7 @@
 			height:100%;
 			margin:0;
 			color: black;
-			background-color: #333;
+			background-color: #335;
 			font-size:2vmin;
 			font-family: "Helvetica", "Arial", sans-serif;
 			-webkit-touch-callout: none;
@@ -132,13 +132,15 @@
 			position: absolute;
 			height:8vmin;
 			width:8vmin;
-			background-color: #AAA;
+			background-image: url("mat.png");
+			background-size: 100%;
+			background-position: center;
+			background-repeat: no-repeat;
 		}
 		.bin.locked{
 			visibility: hidden;
 		}
 		.table{
-			background-color: #AA3;
 			width: 8vmin;
 			height: 8vmin;
 			position: absolute;
@@ -155,9 +157,12 @@
 			left:4vmin;
 			bottom: 24vmin;
 			position: absolute;
-			background-color: red;
+			line-height: 8vmin;
+			text-align: center;
 			height: 8vmin;
 			width: 8vmin;
+			background-color:#FAA;
+			border-radius: 2vmin;
 		}
 		#money-display{
 			left:2vmin;
@@ -174,20 +179,24 @@
 		#pickup{
 			background-color: #AFA;
 			position: absolute;
-			width:20vmin;
+			width:29vmin;
 			text-align: center;
 			height:3vmin;
 			bottom:3vmin;
-			left:30vmin;
+			left:25vmin;
+			border-radius: 1vmin;
+			border:.5vmin solid #000;
 		}
 		#sellall{
 			background-color: #FAA;
 			position: absolute;
-			width:20vmin;
+			width:29vmin;
 			text-align: center;
 			height:3vmin;
 			bottom:8vmin;
-			left:30vmin;
+			left:25vmin;
+			border-radius: 1vmin;
+			border:.5vmin solid #000;
 		}
 		#breeding-bar{
 			position: absolute;
@@ -196,7 +205,8 @@
 			left: 30vmin;
 			width:20vmin;
 			padding:.5vmin;
-			background-color: #AAF;
+			background-color: rgba(255, 255, 255, 0.5);
+			border-radius: 1vmin;
 		}
 		#breeding-bar-inner{
 			position: absolute;
@@ -204,7 +214,8 @@
 			top:.5vmin;
 			left:.5vmin;
 			width:0vmin;
-			background-color: #FAA;
+			background-color: #000;
+			border-radius: 1vmin;
 		}
 		#game-container{
 			position: absolute;
@@ -212,6 +223,11 @@
 			height: 80vmin;
 			top:0vmin;
 			left:0vmin;
+			background-image: url("beach.png");
+			background-size:100%;
+			background-position: center;
+			background-repeat: no-repeat;
+			border-radius: 3vmin;
 		}
 		#upgrades{
 			position: absolute;
@@ -244,7 +260,7 @@
 			border-radius: 2vmin;
 			color: black;
 		}
-		#quote:before{
+		#quote:before, #welcome-quote:before{
 			content: "";
 			display: block;
 			position: absolute;
@@ -375,8 +391,29 @@
 			height: 80vmin;
 			top:0vmin;
 			left:0vmin;
-			background-color: #AFA;
+			background-color: rgba(0, 0, 0, 0.8);
 			border-radius: 3vmin;
+		}
+		#welcome-guy{
+			position: absolute;
+			bottom:0vmin;
+			left:0vmin;
+			height:40vmin;
+			width: 30vmin;
+			background-image: url("welcome.png");
+			background-size: 100%;
+			background-position: bottom;
+			background-repeat: no-repeat;
+		}
+		#welcome-quote{
+			padding:2vmin;
+			width: 30vmin;
+			position:absolute;
+			bottom: 12vmin;
+			left: 30vmin;
+			background-color:#FFF;
+			border-radius: 2vmin;
+			color: black;
 		}
 	</style>
 	<link rel='shortcut icon' href='favicon.ico' type='image/x-icon'/ >
@@ -417,13 +454,18 @@
 				<div id="pickup" onclick="pickUp()">grab a tiki from the pile</div>
 				<div id="sellall" onclick="sellAll()">sell all</div>
 
-				<div id="sell" ondrop="sell(event)" ondragover="allowDrop(event)"></div>
+				<div id="sell" ondrop="sell(event)" ondragover="allowDrop(event)">sell</div>
 			</div>
 
 			<div id="welcome">
 				<div id="close-welcome" onclick="closeWelcome()">continue</div>
-				<div id="shopkeep"></div>
-				<div id="quote">Hi, welcome to the island!</div>
+				<div id="welcome-guy"></div>
+				<div id="welcome-quote">
+					<b>Hi, welcome to our island!</b><br /><br />
+					While vacationing here, you may find some Tikis laying around carved by ancient peoples. They're certainly interesting!
+					Some people say that something strange will happen if you place them on the ancestral Tiki table.<br /><br />
+					Seems like a plot hole that no one has ever tried this out before, but why don't you go ahead and try it for yourself?
+				</div>
 			</div>
 
 			<div id="upgrades">
@@ -435,8 +477,8 @@
 					<span class="upgrade-button" id="upgrade-breeding-button" onclick="upgrade('incense')">Purchase - $<span id="upgrade-breeding-price">50</span></span>
 				</div>
 				<div id="upgrade-breeding" class="upgrade" style="top:22vmin;left:4vmin;">
-					<span class="upgrade-title">More Bins</span><br />
-					<span class="upgrade-text">More bins you can use to hold more tikis.</span><br />
+					<span class="upgrade-title">More Mats</span><br />
+					<span class="upgrade-text">More mats you can use to hold more tikis.</span><br />
 					<span class="upgrade-button" id="upgrade-bins-button" onclick="upgrade('bins')">Purchase - $<span id="upgrade-bins-price">25</span></span>
 				</div>
 				<div id="upgrade-uranium" class="upgrade" style="top:7vmin;right:4vmin;">
