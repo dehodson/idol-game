@@ -137,7 +137,7 @@ var bins  = [null, null, null, null, null, null];
 var table = [null, null];
 var tikis = {};
 var numTikis = 0;
-var cash = 100000;
+var cash = 0;
 var breedingTime = 35;
 var mutationChance = .6;
 var negativeMutation = .5;
@@ -514,4 +514,4 @@ function gameTick(){
 	}
 }
 
-window.setInterval(gameTick, 100)
+window.setInterval(gameTick, 100);
