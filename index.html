@@ -106,7 +106,7 @@
 			padding: 1vmin;
 			position: absolute;
 			z-index: 1;
-			bottom: 110%;
+			top: 110%;
 			left: 50%;
 			font-size:2vmin;
 			width: 20vmin;
@@ -115,12 +115,12 @@
 		.outside .tooltip::after {
 			content: "";
 			position: absolute;
-			top: 100%;
+			bottom: 100%;
 			left: 50%;
 			margin-left: -1vmin;
 			border-width: 1vmin;
 			border-style: solid;
-			border-color: black transparent transparent transparent;
+			border-color: transparent transparent black transparent;
 		}
 		.outside:hover .tooltip{
 			visibility: visible;

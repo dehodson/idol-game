@@ -248,7 +248,9 @@ if(localStorage.tikiSave){
 }
 
 function addCash(number){
-	cash += number;
+	if(number >= 1){
+		cash += Math.log(number) + 1;
+	}
 	document.getElementById("cash").innerHTML = cash.toFixed(2);
 	document.getElementById("shop-cash").innerHTML = cash.toFixed(2);
 }
